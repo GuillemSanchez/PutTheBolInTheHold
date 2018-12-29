@@ -53,6 +53,25 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(30, 30, 1), vec3(98.5F, 7, 200 + 32.6F), Green, -60.f, vec3(1, 0, 0)); //RAMPA
 	AddWall(vec3(30, 30, 1), vec3(115, 7, 200 +32.6F), Green, -60.f, vec3(1, 0, 0)); //RAMPA
 	AddWall(vec3(3, XL+7, 170), vec3(82.5F, 7.5F+3.5F, 205), Green); //IZQUIERDA
+	AddWall(vec3(3, XL, 180), vec3(102.5F, 7.5F, 335.5F), Green); //IZQUIERDA
+	AddWall(vec3(3, XL, 40), vec3(82.5F, 7.5F, 330), Green); //IZQUIERDA
+	AddWall(vec3(3, XL, 20), vec3(82.5F, 7.5F, 400), Green); //IZQUIERDA
+	AddWall(vec3(3, XL, 20), vec3(82.5F, 7.5F, 440), Green); //IZQUIERDA
+	AddWall(vec3(185, XL, 3), vec3(10, 7.5F, 390), Green); //IZQUIERDA
+	AddWall(vec3(28, XL, 3), vec3(90, 7.5F, 350), Green); //IZQUIERDA
+	AddWall(vec3(40, XL, 3), vec3(40, 7.5F, 350), Green); //IZQUIERDA
+	AddWall(vec3(3, XL, 65), vec3(-31, 7.5F, 243), Green); //DERECHA
+	AddWall(vec3(3, XL, 125), vec3(-31, 7.5F, 360), Green); //DERECHA
+	AddWall(vec3(37, XL, 3), vec3(-12, 7.5F, 350), Green); //IZQUIERDA
+	AddWall(vec3(60, XL, 3), vec3(-90, 7.5F, 350), Green); //DERECHA
+	AddWall(vec3(30, XL, 3), vec3(14, 7.5F, 370), Green); //IZQUIERDA
+	AddWall(vec3(30, XL, 3), vec3(-44.5, 7.5F, 297), Green); //DERECHA
+	AddWall(vec3(3, XL, 75), vec3(-60, 7.5F, 261), Green); //DERECHA
+	AddWall(vec3(3, XL, 75), vec3(-80, 7.5F, 261), Green); //DERECHA
+	AddWall(vec3(20, XL, 3), vec3(-70, 7.5F, 225.5F), Green); //DERECHA
+	AddWall(vec3(3, XL, 20), vec3(-31, 7.5F, 450), Green); //DERECHA
+	AddWall(vec3(3, XL, 60), vec3(30, 7.5F, 420), Green); //DERECHA
+	AddWall(vec3(3, XL, 42.8F), vec3(50, 7.5F, 370), Green); //DERECHA
 
 
 
@@ -71,7 +90,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
-	p.color = Black;
+
 	p.axis = true;
 	p.Render();
 	PrintWalls();
