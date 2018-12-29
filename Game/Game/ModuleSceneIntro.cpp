@@ -4,10 +4,6 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 
-#define XXL_Height
-#define XL_Height
-#define L_Height
-
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -22,12 +18,15 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(0.0F, 5.0F, 0.0F));
+	App->camera->Move(vec3(0.0F, 5.0F, -10.F));
 	App->camera->LookAt(vec3(0, 0, 11));
-	AddWall(vec3(30, 15, 1), vec3(0, 7.5F, 40), Blue);
-	AddWall(vec3(30, 30, 1), vec3(0, 15, 20), Green);
+	AddWall(vec3(30, 60, 1), vec3(0, 30, 80), Blue);
+	AddWall(vec3(30, 15, 1), vec3(0, 7.5F, 40), Green);
+
+	AddWall(vec3(30, 30, 1), vec3(0, 7, 26.7), Red, 60.f, vec3(1, 0, 0)); 
+
+
 	return ret;
-	
 }
 
 // Load assets
@@ -42,6 +41,7 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
+	p.color = Black;
 	p.axis = true;
 	p.Render();
 	PrintWalls();
