@@ -29,7 +29,6 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(100, XL, 3), vec3(54, 7.5F, 40), Green);
 	AddWall(vec3(100, XL, 3), vec3(-54, 7.5F, 40), Green); //DERECHA
 	AddWall(vec3(3, XL, 150), vec3(-75, 7.5F, 116.5F), Green); //DERECHA
-	AddWall(vec3(7, XXL, 800), vec3(-115.5F, 30, 0), Blue); //DERECHA
 	AddWall(vec3(30, XL, 3), vec3(-100, 7.5F, 116), Green); //DERECHA
 	AddWall(vec3(50, XL, 3), vec3(-101, 7.5F, 137), Green,55.F,vec3(0,1,0)); //DERECHA
 	AddWall(vec3(30, XL, 3), vec3(-90+1.5F, 7.5F, 166), Green); //DERECHA
@@ -46,7 +45,6 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(55, XL, 3), vec3(-6.5F, 7.5F, 100), Green); //IZQUIERDA
 	AddWall(vec3(3, XL, 15), vec3(40, 7.5F, 48), Green); //IZQUIERDA
 	AddWall(vec3(3, XL, 15), vec3(68.5F, 7.5F, 56), Green); //IZQUIERDA
-	AddWall(vec3(7, XXL, 800), vec3(130.5F, 30, 0), Blue); //IZQUIERDA
 	AddWall(vec3(49, 3, 40), vec3(108, 13.5f, 200), Green); //PLATAFORMA
 	AddWall(vec3(30, 30, 1), vec3(98.5F, 7, 200-33), Green, 60.f, vec3(1, 0, 0)); //RAMPA
 	AddWall(vec3(30, 30, 1), vec3(115, 7, 200-33), Green, 60.f, vec3(1, 0, 0)); //RAMPA
@@ -72,8 +70,13 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(3, XL, 20), vec3(-31, 7.5F, 450), Green); //DERECHA
 	AddWall(vec3(3, XL, 60), vec3(30, 7.5F, 420), Green); //DERECHA
 	AddWall(vec3(3, XL, 42.8F), vec3(50, 7.5F, 370), Green); //DERECHA
-
-
+	AddWall(vec3(1, 30, 60), vec3(30+14.5F, 7, 420), Green, 60.f, vec3(0, 0, 1)); //RAMPA
+	AddWall(vec3(1, 30, 40), vec3(102.5- + 14.5F, 7, 371), Green, -60.f, vec3(0, 0, 1)); //RAMPA
+	AddWall(vec3(20, 30, 1), vec3(-70, 7,225.5F+14.3F), Green, -60.f, vec3(1, 0, 0)); //RAMPA
+	AddWall(vec3(7, XXL, 800), vec3(-115.5F, 30, 100), Blue); //DERECHA
+	AddWall(vec3(7, XXL, 800), vec3(130.5F, 30, 100), Blue); //IZQUIERDA
+	AddWall(vec3(350, XXL, 7), vec3(0, 30, 450), Blue); //FINAL
+	AddWall(vec3(350, XXL, 7), vec3(0, 30, 0), Blue); //INICIO
 
 	return ret;
 }
