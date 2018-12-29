@@ -18,7 +18,7 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
-	void AddWall(vec3,vec3,float,vec3,float, Color);
+	void AddWall(vec3 size, vec3 position, Color color, float angle = 0.0f, vec3 rotvec =  vec3(0,0,0), float mass = 0);
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void PrintWalls();
