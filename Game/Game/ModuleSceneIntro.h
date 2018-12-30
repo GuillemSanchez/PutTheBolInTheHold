@@ -8,6 +8,17 @@
 
 struct PhysBody3D;
 struct PhysMotor3D;
+struct Fan {
+
+	Fan() {}
+	Fan(Cube c, Cube c2, PhysBody3D* bc, PhysBody3D* bc2) : cube(c), cube2(c2), body_cube(bc), body_cube2(bc2) {}
+
+	Cube cube;
+	Cube cube2;
+	PhysBody3D* body_cube = nullptr;
+	PhysBody3D* body_cube2 = nullptr;
+
+};
 
 class ModuleSceneIntro : public Module
 {
@@ -22,7 +33,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void PrintWalls();
-
+	void CreateFan(float x, float y, float z, Color color = Black);
 public:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
@@ -47,5 +58,6 @@ public:
 	PhysMotor3D* right_wheel;
 private:
 	p2List<Cube> Walls;
+	p2List<Fan> fan;
 
 };

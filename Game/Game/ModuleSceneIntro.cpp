@@ -97,6 +97,16 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 	PrintWalls();
+	for (p2List_item<Fan>* item = fan.getFirst(); item; item = item->next)
+	{
+		btQuaternion quat = item->data.body_cube2->GetRotation();
+		quat = quat.normalized();
+		float angle = 2 * acos(quat.w()) * 180 / 3.14;
+		float den = sqrt(1 - quat.w() *quat.w());
+		item->data.cube2.SetRotation(angle, { quat.x() / den,quat.y() / den,quat.z() / den });
+		item->data.cube2.SetPos(item->data.body_cube2->GetPos().x(), item->data.body_cube2->GetPos().y(), item->data.body_cube2->GetPos().z());
+		item->data.cube2.Render();
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -130,3 +140,21 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 }
 
+void ModuleSceneIntro::CreateFan(float x, float y, float z, Color color) {
+
+	Cube c(1, 1, 1);
+	c.SetPos(x, y, z);
+	PhysBody3D* c_body = App->physics->AddBody(c, 0);
+
+	Cube c2(0.1f, 9.5f, 1);
+	c2.SetPos(x + 2, y, z);
+	PhysBody3D* c2_body = App->physics->AddBody(c2, 1000);
+	c2.color = color;
+
+
+	App->physics->AddConstraintHinge(*c_body, *c2_body, { 0,0,0 }, { 0,8,0 }, { 0,0,1 }, { 1,0,0 }, true);
+
+	Fan bl(c, c2, c_body, c2_body);
+	fan.add(bl);
+	
+}

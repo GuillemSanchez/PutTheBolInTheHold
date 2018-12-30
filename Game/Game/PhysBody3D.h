@@ -5,7 +5,8 @@
 
 class btRigidBody;
 class Module;
-
+class btVector3;
+class btQuaternion;
 // =================================================
 struct PhysBody3D
 {
@@ -18,6 +19,9 @@ public:
 	void GetTransform(float* matrix) const;
 	void SetTransform(const float* matrix) const;
 	void SetPos(float x, float y, float z);
+	btQuaternion GetRotation();
+	btVector3 GetPos();
+	void SetRotation(btQuaternion rotation);
 
 private:
 	btRigidBody* body = nullptr;
