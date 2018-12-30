@@ -54,7 +54,7 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 	else
 	{
-		FollowCar();
+		FollowCar(App->player->look_up);
 	}
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
@@ -161,16 +161,16 @@ void ModuleCamera3D::FreeCamMovement(float dt)
 	}
 }
 
-void ModuleCamera3D::FollowCar()
+void ModuleCamera3D::FollowCar(float player_look)
 {
 	Position.x = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() - 15 * App->player->vehicle->vehicle->getForwardVector().getX();
-	Position.y = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 10 * App->player->vehicle->vehicle->getUpAxis();
+	Position.y = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 15 * App->player->vehicle->vehicle->getUpAxis();
 	Position.z = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() - 15 * App->player->vehicle->vehicle->getForwardVector().getZ();
 
-	float player_x = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 2 * App->player->vehicle->vehicle->getForwardVector().getX();
-	float player_z = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 2 * App->player->vehicle->vehicle->getForwardVector().getZ();
+	float player_x = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 5 * App->player->vehicle->vehicle->getForwardVector().getX();
+	float player_z = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 5 * App->player->vehicle->vehicle->getForwardVector().getZ();
 
-	LookAt(vec3(player_x, 6, player_z));
+	LookAt(vec3(player_x, player_look, player_z));
 }
 
 // -----------------------------------------------------------------

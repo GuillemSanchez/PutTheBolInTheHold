@@ -5,6 +5,9 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
+
+
+
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
@@ -195,7 +198,18 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
-
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+	{
+		look_up += LOOK_UP_SPEED;
+		if (look_up >= MAX_LOOK_UP)
+			look_up = MAX_LOOK_UP;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_IDLE)
+	{
+		look_up -= LOOK_UP_SPEED;
+		if (look_up <= STANDARD_LOOK_UP)
+			look_up = STANDARD_LOOK_UP;
+	}
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);

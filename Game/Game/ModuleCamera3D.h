@@ -22,7 +22,7 @@ private:
 
 	void CalculateViewMatrix();
 	void FreeCamMovement(float dt);
-	void FollowCar();
+	void FollowCar(float player_look);
 
 public:
 	
