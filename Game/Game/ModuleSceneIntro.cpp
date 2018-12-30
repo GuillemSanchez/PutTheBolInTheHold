@@ -133,6 +133,8 @@ bool ModuleSceneIntro::Start()
 
 	AddWall(vec3(350, XXL, 7), vec3(0, 30, -80), Blue); //INICIO
 
+
+	AddWall(vec3(250, 1, 250), vec3(0, -0.5, 0), Color(220, 220, 220, 0.8f));
 	App->audio->PlayMusic("assets/journey.ogg");
 	time.Start();
 
@@ -150,10 +152,6 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
-
-	p.axis = true;
-	p.Render();
 	PrintWalls();
 	UpdateFans();
 
