@@ -11,12 +11,12 @@ struct PhysMotor3D;
 struct Fan {
 
 	Fan() {}
-	Fan(Cube c, Cube c2, PhysBody3D* bc, PhysBody3D* bc2) : cube(c), cube2(c2), body_cube(bc), body_cube2(bc2) {}
+	Fan(Cube c, Cube c2, PhysBody3D* bc, PhysBody3D* bc2) : cube(c), cube_down(c2), body_cube(bc), body_cube_down(bc2) {}
 
 	Cube cube;
-	Cube cube2;
+	Cube cube_down;
 	PhysBody3D* body_cube = nullptr;
-	PhysBody3D* body_cube2 = nullptr;
+	PhysBody3D* body_cube_down = nullptr;
 
 };
 

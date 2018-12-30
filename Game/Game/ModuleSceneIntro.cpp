@@ -26,6 +26,7 @@ bool ModuleSceneIntro::Start()
 	//AddWall(vec3(30, 15, 1), vec3(0, 7.5F, 40), Green);
 
 	//AddWall(vec3(30, 30, 1), vec3(0, 7, 26.7), Red, 60.f, vec3(1, 0, 0)); 
+	CreateFan(0, 20, 45);
 	AddWall(vec3(100, XL, 3), vec3(54, 7.5F, 40), Green);
 	AddWall(vec3(100, XL, 3), vec3(-54, 7.5F, 40), Green); //DERECHA
 	AddWall(vec3(3, XL, 150), vec3(-75, 7.5F, 116.5F), Green); //DERECHA
@@ -99,13 +100,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	PrintWalls();
 	for (p2List_item<Fan>* item = fan.getFirst(); item; item = item->next)
 	{
-		btQuaternion quat = item->data.body_cube2->GetRotation();
+		btQuaternion quat = item->data.body_cube_down->GetRotation();
 		quat = quat.normalized();
 		float angle = 2 * acos(quat.w()) * 180 / 3.14;
 		float den = sqrt(1 - quat.w() *quat.w());
-		item->data.cube2.SetRotation(angle, { quat.x() / den,quat.y() / den,quat.z() / den });
-		item->data.cube2.SetPos(item->data.body_cube2->GetPos().x(), item->data.body_cube2->GetPos().y(), item->data.body_cube2->GetPos().z());
-		item->data.cube2.Render();
+		item->data.cube_down.SetRotation(angle, { quat.x() / den,quat.y() / den,quat.z() / den });
+		item->data.cube_down.SetPos(item->data.body_cube_down->GetPos().x(), item->data.body_cube_down->GetPos().y(), item->data.body_cube_down->GetPos().z());
+		item->data.cube_down.Render();
 	}
 	return UPDATE_CONTINUE;
 }
