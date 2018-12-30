@@ -20,6 +20,8 @@ public:
 	bool CleanUp();
 
 	void ResetPosition(); 
+	void InitialPosition(); 
+	void CreateVehicle();
 	vec3 GetPos();
 
 public:

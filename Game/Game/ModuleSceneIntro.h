@@ -34,6 +34,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void PrintWalls();
 	void CreateFan(float x, float y, float z, Color color = Black);
+	void UpdateFans();
 	PhysBody3D* CreateFinishLane(vec3 size, vec3 position);
 public:
 	/*

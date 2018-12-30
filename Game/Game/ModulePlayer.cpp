@@ -18,13 +18,52 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	CreateVehicle();
+
+	s.radius = 2;
+	s.color = Blue;	
+	s.SetPos(0, 5, -40);
+	Ball = App->physics->AddBody(s, 300);
+
+	vehicle->SetPos(0, 12, -60);
+	
+	return true;
+}
+
+// Unload assets
+bool ModulePlayer::CleanUp()
+{
+	LOG("Unloading player");
+
+	return true;
+}
+
+void ModulePlayer::ResetPosition()
+{
+	turn = acceleration = brake = 0.0f;
+	vehicle->SetRotation({ 0, vehicle->vehicle->getForwardVector().getX(), 0, vehicle->vehicle->getForwardVector().getZ()});
+
+	vehicle->SetPos(GetPos().x, GetPos().y + 5, GetPos().z);
+}
+
+void ModulePlayer::InitialPosition()
+{
+	vehicle->SetPos(0, 12, -60);
+	Ball->SetPos(0, 5, -40);
+	s.SetPos(0, 5, -40);
+	brake = BRAKE_POWER;
+}
+
+void ModulePlayer::CreateVehicle()
+{
+
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(3, 2, 6);
 	car.chassis_offset.Set(0, 1.5, 0);
 	car.pale_size.Set(6, 3, 1);
-	car.pale_offset.Set(0,2,2.9);
+	car.pale_offset.Set(0, 2, 2.9);
 	car.cabin_size.Set(1, 1, 2);
 	car.cabin_offset.Set(-0.5, 3, 0);
 	car.mass = 500.0f;
@@ -45,10 +84,10 @@ bool ModulePlayer::Start()
 
 	float half_width = car.chassis_size.x*0.5f;
 	float half_length = car.chassis_size.z*0.5f;
-	
-	vec3 direction(0,-1,0);
-	vec3 axis(-1,0,0);
-	
+
+	vec3 direction(0, -1, 0);
+	vec3 axis(-1, 0, 0);
+
 	car.num_wheels = 4;
 	car.wheels = new Wheel[4];
 
@@ -100,34 +139,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
-
-
-	s.radius = 2;
-	s.color = Blue;
-	s.SetPos(0, 5, -40);
-	Ball = App->physics->AddBody(s, 300);
-
-	
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, -60);
-	
-	return true;
-}
-
-// Unload assets
-bool ModulePlayer::CleanUp()
-{
-	LOG("Unloading player");
-
-	return true;
-}
-
-void ModulePlayer::ResetPosition()
-{
-	turn = acceleration = brake = 0.0f;
-	vehicle->SetRotation({ 0, vehicle->vehicle->getForwardVector().getX(), 0, vehicle->vehicle->getForwardVector().getZ()});
-
-	vehicle->SetPos(GetPos().x, GetPos().y + 5, GetPos().z);
 }
 
 vec3 ModulePlayer::GetPos()
@@ -139,24 +151,14 @@ vec3 ModulePlayer::GetPos()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
-	Ball->GetTransform(&s.transform);
-	s.Render();
+
 	if (App->scene_intro->touched_the_sky) {
 		App->scene_intro->touched_the_sky = false;
-		vehicle->SetPos(0, 12, 10);
-		Ball->SetPos(0, 5, 25);
-		s.SetPos(0, 5, 25);
-		brake = BRAKE_POWER;
-
-
-
+		InitialPosition();
 	}
 	if (lose) {
 		lose = false;
-		vehicle->SetPos(0, 12, 10);
-		Ball->SetPos(0, 5, 25);
-		s.SetPos(0, 5, 25);
-		brake = BRAKE_POWER;
+		InitialPosition();
 		App->scene_intro->time.Stop();
 		App->scene_intro->time.Start();
 	}
@@ -192,6 +194,8 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
+
+
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -207,7 +211,10 @@ update_status ModulePlayer::Update(float dt)
 		lose = true;
 	}
 	
+
+	Ball->GetTransform(&s.transform);
 	vehicle->Render();
+	s.Render();
 
 	return UPDATE_CONTINUE;
 }

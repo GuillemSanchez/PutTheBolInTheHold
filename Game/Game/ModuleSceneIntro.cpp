@@ -28,12 +28,6 @@ bool ModuleSceneIntro::Start()
 	FinishLane = CreateFinishLane(vec3(3, 3, 3), vec3(20-20, 0.7F, 460 -35));
 	//Finished------------------------------------------------------
 
-
-
-
-
-	App->camera->Move(vec3(0.0F, 5.0F, -10.F));
-	App->camera->LookAt(vec3(0, 0, 11));
 	//AddWall(vec3(30, 60, 1), vec3(0, 30, 80), Blue);
 	//AddWall(vec3(30, 15, 1), vec3(0, 7.5F, 40), Green);
 
@@ -49,6 +43,8 @@ bool ModuleSceneIntro::Start()
 	CreateFan(-94, 13, 270);
 	CreateFan(-94, 13, 290);
 
+
+	// Left Side Fans
 	CreateFan(115, 13, 70);
 	CreateFan(115, 13, 90);
 	CreateFan(115, 13, 110);
@@ -60,6 +56,7 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(5, 5, 5), vec3(109, 8.5f, 167), Blue);
 	AddWall(vec3(5, 5, 5), vec3(125, 9.5f, 170), Blue);
 
+	// Spikes
 	AddWall(vec3(5, 5, 5), vec3(80, -1, 70), Red, 67.0F, vec3(0, 2, 1));
 	AddWall(vec3(5, 5, 5), vec3(65, -1, 70), Red, 55.0F, vec3(1, 1, 0));
 	AddWall(vec3(5, 5, 5), vec3(90, -1, 75), Red, 33.0F, vec3(1, 0, 1));
@@ -68,8 +65,6 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(5, 5, 5), vec3(65-10, -1, 70+20), Red, 55.0F, vec3(1, 1, 0));
 	AddWall(vec3(5, 5, 5), vec3(90-10, -1, 75+10), Red, 33.0F, vec3(1, 0, 1));
 	AddWall(vec3(5, 5, 5), vec3(95-10, -1, 62+15), Red, 87.0F, vec3(0, 4, 1));
-
-
 
 	AddWall(vec3(20, 20, 20), vec3(-50, 5, 160), Red);
 	AddWall(vec3(100, XL, 3), vec3(54, 7.5F, 40), Green);
@@ -147,16 +142,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 	PrintWalls();
-	for (p2List_item<Fan>* item = fan.getFirst(); item; item = item->next)
-	{
-		btQuaternion quat = item->data.body_cube_down->GetRotation();
-		quat = quat.normalized();
-		float angle = 2 * acos(quat.w()) * 180 / 3.14;
-		float den = sqrt(1 - quat.w() *quat.w());
-		item->data.cube_down.SetRotation(angle, { quat.x() / den,quat.y() / den,quat.z() / den });
-		item->data.cube_down.SetPos(item->data.body_cube_down->GetPos().x(), item->data.body_cube_down->GetPos().y(), item->data.body_cube_down->GetPos().z());
-		item->data.cube_down.Render();
-	}
+	UpdateFans();
 
 	return UPDATE_CONTINUE;
 }
@@ -229,4 +215,18 @@ void ModuleSceneIntro::CreateFan(float x, float y, float z, Color color) {
 	App->physics->AddConstraintHinge(*c_body, *c2_body, { 0,0,0 }, { 0,8,0 }, { 0,0,1 }, { 1,0,0 }, true);
 	Fan bl(c, c2, c_body, c2_body);
 	fan.add(bl);
+}
+
+void ModuleSceneIntro::UpdateFans()
+{
+	for (p2List_item<Fan>* item = fan.getFirst(); item; item = item->next)
+	{
+		btQuaternion quat = item->data.body_cube_down->GetRotation();
+		quat = quat.normalized();
+		float angle = 2 * acos(quat.w()) * 180 / 3.14;
+		float den = sqrt(1 - quat.w() *quat.w());
+		item->data.cube_down.SetRotation(angle, { quat.x() / den,quat.y() / den,quat.z() / den });
+		item->data.cube_down.SetPos(item->data.body_cube_down->GetPos().x(), item->data.body_cube_down->GetPos().y(), item->data.body_cube_down->GetPos().z());
+		item->data.cube_down.Render();
+	}
 }
