@@ -1,5 +1,10 @@
 ﻿# PutTheBolInTheHold
 
+# Objective
+
+Get The ball to the beacon, at the end of this insane laberynth, before the time goes off. 
+You can find the beacon by looking for a great red light that goes to the sky.
+
 ## Controls: 
 
 W - Accelerate

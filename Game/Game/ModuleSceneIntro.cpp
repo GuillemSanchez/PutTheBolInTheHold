@@ -131,9 +131,9 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(7, XXL, 800), vec3(130.5F, 30, 100), Blue); //LEFT
 	AddWall(vec3(350, XXL, 7), vec3(0, 30, 450), Blue); //FINAL
 
-	AddWall(vec3(350, XXL, 7), vec3(0, 30, -80), Blue); // START
+	AddWall(vec3(350, XXL, 7), vec3(0, 30, -100), Blue); // START
 
-	AddWall(vec3(1, 300, 1), vec3(0, 150, 425), Red); // BEACON
+	AddWall(vec3(1, 300, 1), vec3(0, 160, 425), Red); // BEACON
 
 	AddWall(vec3(2000, 1, 2000), vec3(0, -0.5, 0), Color(1,1,1,1));
 	App->audio->PlayMusic("assets/journey.ogg");
