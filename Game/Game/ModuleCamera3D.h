@@ -21,6 +21,8 @@ public:
 private:
 
 	void CalculateViewMatrix();
+	void FreeCamMovement(float dt);
+	void FollowCar();
 
 public:
 	
@@ -28,5 +30,6 @@ public:
 
 private:
 
+	bool debug_camera = false; 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 };

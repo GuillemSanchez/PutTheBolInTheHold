@@ -114,6 +114,19 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 
+void ModulePlayer::ResetPosition()
+{
+	turn = acceleration = brake = 0.0f;
+	vehicle->SetRotation({ 0, vehicle->vehicle->getForwardVector().getX(), 0, vehicle->vehicle->getForwardVector().getZ()});
+
+	vehicle->SetPos(GetPos().x, GetPos().y + 5, GetPos().z);
+}
+
+vec3 ModulePlayer::GetPos()
+{
+	return vec3(vehicle->GetPos().getX(), vehicle->GetPos().getY(), vehicle->GetPos().getZ());
+}
+
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
@@ -141,6 +154,11 @@ update_status ModulePlayer::Update(float dt)
 		acceleration = -MAX_ACCELERATION * 0.5;
 	}
 
+		
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		ResetPosition();
+	}
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);

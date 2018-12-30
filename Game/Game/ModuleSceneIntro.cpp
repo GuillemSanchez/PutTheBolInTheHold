@@ -26,15 +26,19 @@ bool ModuleSceneIntro::Start()
 	//AddWall(vec3(30, 15, 1), vec3(0, 7.5F, 40), Green);
 
 	//AddWall(vec3(30, 30, 1), vec3(0, 7, 26.7), Red, 60.f, vec3(1, 0, 0)); 
+	
+	// Right Side Fans
 	CreateFan(-94, 13, 50);
 	CreateFan(-94, 13, 70);
 	CreateFan(-94, 13, 90);
+
 	CreateFan(115, 13, 70);
 	CreateFan(115, 13, 90);
 	CreateFan(115, 13, 110);
 	CreateFan(115, 13, 130);
 	CreateFan(-50, 13, 90);
 	CreateFan(-40, 13, 110);
+
 	AddWall(vec3(5, 5,5 ), vec3(121, 3.5f, 158), Blue);
 	AddWall(vec3(5, 5, 5), vec3(109, 8.5f, 167), Blue);
 	AddWall(vec3(5, 5, 5), vec3(125, 9.5f, 170), Blue);
@@ -47,6 +51,9 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(5, 5, 5), vec3(65-10, -1, 70+20), Red, 55.0F, vec3(1, 1, 0));
 	AddWall(vec3(5, 5, 5), vec3(90-10, -1, 75+10), Red, 33.0F, vec3(1, 0, 1));
 	AddWall(vec3(5, 5, 5), vec3(95-10, -1, 62+15), Red, 87.0F, vec3(0, 4, 1));
+
+
+
 	AddWall(vec3(20, 20, 20), vec3(-50, 5, 160), Red);
 	AddWall(vec3(100, XL, 3), vec3(54, 7.5F, 40), Green);
 	AddWall(vec3(100, XL, 3), vec3(-54, 7.5F, 40), Green); //DERECHA
@@ -98,7 +105,7 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(7, XXL, 800), vec3(-115.5F, 30, 100), Blue); //DERECHA
 	AddWall(vec3(7, XXL, 800), vec3(130.5F, 30, 100), Blue); //IZQUIERDA
 	AddWall(vec3(350, XXL, 7), vec3(0, 30, 450), Blue); //FINAL
-	AddWall(vec3(350, XXL, 7), vec3(0, 30, 0), Blue); //INICIO
+	//AddWall(vec3(350, XXL, 7), vec3(0, 30, 0), Blue); //INICIO
 
 	return ret;
 }
@@ -129,6 +136,7 @@ update_status ModuleSceneIntro::Update(float dt)
 		item->data.cube_down.SetPos(item->data.body_cube_down->GetPos().x(), item->data.body_cube_down->GetPos().y(), item->data.body_cube_down->GetPos().z());
 		item->data.cube_down.Render();
 	}
+
 	return UPDATE_CONTINUE;
 }
 

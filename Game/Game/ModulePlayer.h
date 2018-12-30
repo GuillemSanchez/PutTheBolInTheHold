@@ -19,6 +19,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	void ResetPosition(); 
+	vec3 GetPos();
+
 public:
 
 	PhysVehicle3D* vehicle;
