@@ -42,6 +42,7 @@ bool ModuleSceneIntro::Start()
 	CreateFan(-94, 13, 250);
 	CreateFan(-94, 13, 270);
 	CreateFan(-94, 13, 290);
+	CreateFan(-100, 13, 390);
 
 
 	// Left Side Fans
@@ -65,6 +66,18 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(5, 5, 5), vec3(65-10, -1, 70+20), Red, 55.0F, vec3(1, 1, 0));
 	AddWall(vec3(5, 5, 5), vec3(90-10, -1, 75+10), Red, 33.0F, vec3(1, 0, 1));
 	AddWall(vec3(5, 5, 5), vec3(95-10, -1, 62+15), Red, 87.0F, vec3(0, 4, 1));
+
+	AddWall(vec3(5, 5, 5), vec3(123, -1, 260), Red, 55.0F, vec3(1, 1, 0));
+	AddWall(vec3(5, 5, 5), vec3(108, -1, 280), Red, 87.0F, vec3(0, 4, 1));
+	AddWall(vec3(5, 5, 5), vec3(115, -1, 300), Red, 67.0F, vec3(0, 2, 1));
+	AddWall(vec3(5, 5, 5), vec3(123, -1, 320), Red, 55.0F, vec3(1, 1, 0));
+	AddWall(vec3(5, 5, 5), vec3(115, -1, 340), Red, 87.0F, vec3(0, 4, 1));
+	AddWall(vec3(5, 5, 5), vec3(108, -1, 360), Red, 87.0F, vec3(0, 4, 1));
+	AddWall(vec3(5, 5, 5), vec3(115, -1, 380), Red, 67.0F, vec3(0, 2, 1));
+	AddWall(vec3(5, 5, 5), vec3(123, -1, 400), Red, 55.0F, vec3(1, 1, 0));
+	AddWall(vec3(5, 5, 5), vec3(108, -1, 420), Red, 87.0F, vec3(0, 4, 1));
+	AddWall(vec3(5, 5, 5), vec3(123, -1, 420), Red, 55.0F, vec3(1, 1, 0));
+
 
 	AddWall(vec3(20, 20, 20), vec3(-50, 5, 160), Red);
 	AddWall(vec3(100, XL, 3), vec3(54, 7.5F, 40), Green);
