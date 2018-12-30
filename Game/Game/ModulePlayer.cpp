@@ -29,6 +29,10 @@ bool ModulePlayer::Start()
 	Ball = App->physics->AddBody(s, 150);
 
 	vehicle->SetPos(0, 12, -60);
+
+	App->audio->LoadFx("assets/lose.wav");
+	App->audio->LoadFx("assets/win.wav");
+
 	
 	return true;
 }
@@ -47,6 +51,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		App->scene_intro->touched_the_sky = false;
 		InitialPosition();
+		App->audio->PlayFx(1);
 	}
 	if (lose) 
 	{
@@ -54,6 +59,7 @@ update_status ModulePlayer::Update(float dt)
 		InitialPosition();
 		App->scene_intro->time.Stop();
 		App->scene_intro->time.Start();
+		App->audio->PlayFx(2);
 	}
 	
 	CheckTime(); 
@@ -147,8 +153,8 @@ void ModulePlayer::UpdateVehicle()
 void ModulePlayer::CheckTime()
 {
 	Uint32 act_time = App->scene_intro->time.Read();
-	char title[80];
-	sprintf_s(title, "Time: %.1f s || Best_time: %1.f ", (float)act_time / 1000, (float)App->scene_intro->finished_time);
+	char title[120];
+	sprintf_s(title, "--- PutTheBolInTheHold --- Time: %.1f s || Best_time: %1.f || Time To Beat: 240 seconds", (float)act_time / 1000, (float)App->scene_intro->finished_time);
 	App->window->SetTitle(title);
 
 	if (act_time >= 240000) {

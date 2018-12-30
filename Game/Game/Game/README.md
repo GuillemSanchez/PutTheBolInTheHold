@@ -15,6 +15,14 @@ F1 - Debug Physic Bodys
 F5 - Restart Level 
 F9 - Free Camera 
 
+### Free Camera Movement: 
+
+ARROWS - Move Camera
+LEFT SHIFT - Lift Camera
+LEFT CONTROL - Descend Camera
+RIGHT SHIFT - Sprint
+
+
 ## Github Repositiry: 
 https://github.com/GuillemSanchez/PutTheBolInTheHold
 
