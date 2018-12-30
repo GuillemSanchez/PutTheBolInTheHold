@@ -133,7 +133,7 @@ bool ModuleSceneIntro::Start()
 
 	AddWall(vec3(350, XXL, 7), vec3(0, 30, -80), Blue); //INICIO
 
-
+	App->audio->PlayMusic("assets/journey.ogg");
 	time.Start();
 
 	return ret;

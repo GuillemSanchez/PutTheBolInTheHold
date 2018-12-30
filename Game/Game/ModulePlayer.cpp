@@ -41,6 +41,89 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 
+update_status ModulePlayer::Update(float dt)
+{
+	turn = acceleration = brake = 0.0f;
+
+	if (App->scene_intro->touched_the_sky) {
+		App->scene_intro->touched_the_sky = false;
+		InitialPosition();
+	}
+	if (lose) {
+		lose = false;
+		InitialPosition();
+		App->scene_intro->time.Stop();
+		App->scene_intro->time.Start();
+	}
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		acceleration = MAX_ACCELERATION;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		if (turn < TURN_DEGREES)
+			turn += TURN_DEGREES;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		if (turn > -TURN_DEGREES)
+			turn -= TURN_DEGREES;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		acceleration = -MAX_ACCELERATION * 0.5;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		ResetPosition();
+	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	{
+		brake = BRAKE_POWER;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+	{
+		look_up += LOOK_UP_SPEED;
+		if (look_up >= MAX_LOOK_UP)
+			look_up = MAX_LOOK_UP;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_IDLE)
+	{
+		look_up -= LOOK_UP_SPEED;
+		if (look_up <= STANDARD_LOOK_UP)
+			look_up = STANDARD_LOOK_UP;
+	}
+	vehicle->ApplyEngineForce(acceleration);
+	vehicle->Turn(turn);
+	vehicle->Brake(brake);
+
+
+	Uint32 act_time = App->scene_intro->time.Read();
+	char title[80];
+	sprintf_s(title, "Time: %.1f s || Best_time: %1.f ", (float)act_time/1000, (float)App->scene_intro->finished_time);
+	App->window->SetTitle(title);
+
+
+	if (act_time >= 240000) {
+		lose = true;
+	}
+
+
+	Ball->GetTransform(&s.transform);
+	vehicle->Render();
+	s.Render();
+
+	return UPDATE_CONTINUE;
+}
+
+
 void ModulePlayer::ResetPosition()
 {
 	turn = acceleration = brake = 0.0f;
@@ -151,87 +234,3 @@ vec3 ModulePlayer::GetPos()
 }
 
 // Update: draw background
-update_status ModulePlayer::Update(float dt)
-{
-	turn = acceleration = brake = 0.0f;
-
-	if (App->scene_intro->touched_the_sky) {
-		App->scene_intro->touched_the_sky = false;
-		InitialPosition();
-	}
-	if (lose) {
-		lose = false;
-		InitialPosition();
-		App->scene_intro->time.Stop();
-		App->scene_intro->time.Start();
-	}
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		acceleration = MAX_ACCELERATION;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		acceleration = -MAX_ACCELERATION * 0.5;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-	{
-		ResetPosition();
-	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-	{
-		brake = BRAKE_POWER;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
-	{
-		look_up += LOOK_UP_SPEED;
-		if (look_up >= MAX_LOOK_UP)
-			look_up = MAX_LOOK_UP;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_IDLE)
-	{
-		look_up -= LOOK_UP_SPEED;
-		if (look_up <= STANDARD_LOOK_UP)
-			look_up = STANDARD_LOOK_UP;
-	}
-	vehicle->ApplyEngineForce(acceleration);
-	vehicle->Turn(turn);
-	vehicle->Brake(brake);
-
-
-	Uint32 act_time = App->scene_intro->time.Read();
-	char title[80];
-	sprintf_s(title, "%i milsec, %i best_time", act_time, App->scene_intro->finished_time);
-	App->window->SetTitle(title);
-
-
-	if (act_time >= 240000) {
-		lose = true;
-	}
-	
-
-	Ball->GetTransform(&s.transform);
-	vehicle->Render();
-	s.Render();
-
-	return UPDATE_CONTINUE;
-}
-
-
-
