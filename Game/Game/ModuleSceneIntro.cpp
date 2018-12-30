@@ -26,7 +26,19 @@ bool ModuleSceneIntro::Start()
 	//AddWall(vec3(30, 15, 1), vec3(0, 7.5F, 40), Green);
 
 	//AddWall(vec3(30, 30, 1), vec3(0, 7, 26.7), Red, 60.f, vec3(1, 0, 0)); 
-	CreateFan(0, 20, 45);
+	CreateFan(-94, 13, 50);
+	CreateFan(-94, 13, 70);
+	CreateFan(-94, 13, 90);
+	CreateFan(115, 13, 70);
+	CreateFan(115, 13, 90);
+	CreateFan(115, 13, 110);
+	CreateFan(115, 13, 130);
+	AddWall(vec3(5, 5,5 ), vec3(121, 3.5f, 158), Blue);
+	AddWall(vec3(5, 5, 5), vec3(109, 8.5f, 167), Blue);
+	AddWall(vec3(5, 5, 5), vec3(125, 9.5f, 170), Blue);
+
+	AddWall(vec3(5, 5, 5), vec3(109, 8.5f, -100), Red, 45.0F,vec3(1,0,2));
+	
 	AddWall(vec3(100, XL, 3), vec3(54, 7.5F, 40), Green);
 	AddWall(vec3(100, XL, 3), vec3(-54, 7.5F, 40), Green); //DERECHA
 	AddWall(vec3(3, XL, 150), vec3(-75, 7.5F, 116.5F), Green); //DERECHA
@@ -147,7 +159,7 @@ void ModuleSceneIntro::CreateFan(float x, float y, float z, Color color) {
 	c.SetPos(x, y, z);
 	PhysBody3D* c_body = App->physics->AddBody(c, 0);
 
-	Cube c2(0.1f, 9.5f, 1);
+	Cube c2(0.1f, 7.5f, 1);
 	c2.SetPos(x + 2, y, z);
 	PhysBody3D* c2_body = App->physics->AddBody(c2, 1000);
 	c2.color = color;
