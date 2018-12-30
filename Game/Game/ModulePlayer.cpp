@@ -100,6 +100,14 @@ bool ModulePlayer::Start()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
+
+
+	s.radius = 2;
+	s.color = Blue;
+	s.SetPos(0, 5, 25);
+	Ball = App->physics->AddBody(s, 300);
+
+	
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 12, 10);
 	
@@ -131,7 +139,27 @@ vec3 ModulePlayer::GetPos()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
+	Ball->GetTransform(&s.transform);
+	s.Render();
+	if (App->scene_intro->touched_the_sky) {
+		App->scene_intro->touched_the_sky = false;
+		vehicle->SetPos(0, 12, 10);
+		Ball->SetPos(0, 5, 25);
+		s.SetPos(0, 5, 25);
+		brake = BRAKE_POWER;
 
+
+
+	}
+	if (lose) {
+		lose = false;
+		vehicle->SetPos(0, 12, 10);
+		Ball->SetPos(0, 5, 25);
+		s.SetPos(0, 5, 25);
+		brake = BRAKE_POWER;
+		App->scene_intro->time.Stop();
+		App->scene_intro->time.Start();
+	}
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
@@ -154,20 +182,32 @@ update_status ModulePlayer::Update(float dt)
 		acceleration = -MAX_ACCELERATION * 0.5;
 	}
 
-		
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 	{
 		ResetPosition();
+	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	{
+		brake = BRAKE_POWER;
 	}
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
-	vehicle->Render();
 
+	Uint32 act_time = App->scene_intro->time.Read();
 	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	sprintf_s(title, "%i milsec, %i best_time", act_time, App->scene_intro->finished_time);
 	App->window->SetTitle(title);
+
+
+	if (act_time >= 240000) {
+		lose = true;
+	}
+	
+	vehicle->Render();
 
 	return UPDATE_CONTINUE;
 }

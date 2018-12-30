@@ -20,6 +20,18 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	//Beacon Lane---------------------------------------------------
+	AddWall(vec3(5, 5, 5), vec3(20-20,-1, 460 -32.5), White,45.0F,vec3(1,0,0));
+	AddWall(vec3(5, 5, 5), vec3(20-20,-1, 460 -37.5), White, 45.0F, vec3(1, 0, 0));
+	AddWall(vec3(5, 5, 5), vec3(20-22.5, -1, 460 -35), White, 45.0F, vec3(0, 0, 1));
+	AddWall(vec3(5, 5, 5), vec3(20-17.5, -1,460 -35), White, 45.0F, vec3(0, 0, 1));
+	FinishLane = CreateFinishLane(vec3(3, 3, 3), vec3(20-20, 0.7F, 460 -35));
+	//Finished------------------------------------------------------
+
+
+
+
+
 	App->camera->Move(vec3(0.0F, 5.0F, -10.F));
 	App->camera->LookAt(vec3(0, 0, 11));
 	//AddWall(vec3(30, 60, 1), vec3(0, 30, 80), Blue);
@@ -107,6 +119,9 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(350, XXL, 7), vec3(0, 30, 450), Blue); //FINAL
 	//AddWall(vec3(350, XXL, 7), vec3(0, 30, 0), Blue); //INICIO
 
+
+	time.Start();
+
 	return ret;
 }
 
@@ -168,6 +183,35 @@ void ModuleSceneIntro::AddWall(vec3 size, vec3 position, Color color, float angl
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+
+	if (body1 == FinishLane && body2 == (PhysBody3D*)App->player->Ball) {
+		touched_the_sky = true;
+		time.Stop();
+		Uint32 helper = time.Read();
+		if (helper <= finished_time) {
+			finished_time = helper;
+		}
+		time.Start();
+
+	}
+
+
+
+
+
+
+}
+
+PhysBody3D* ModuleSceneIntro::CreateFinishLane(vec3 size, vec3 pos) {
+
+	Cube c(size.x, size.y, size.z);
+	c.SetPos(pos.x, pos.y, pos.z);
+
+	PhysBody3D* flane;
+	flane = App->physics->AddBody(c, 0.0f);
+	flane->collision_listeners.add(this);
+
+	return flane;
 }
 
 void ModuleSceneIntro::CreateFan(float x, float y, float z, Color color) {
@@ -183,8 +227,6 @@ void ModuleSceneIntro::CreateFan(float x, float y, float z, Color color) {
 
 
 	App->physics->AddConstraintHinge(*c_body, *c2_body, { 0,0,0 }, { 0,8,0 }, { 0,0,1 }, { 1,0,0 }, true);
-
 	Fan bl(c, c2, c_body, c2_body);
 	fan.add(bl);
-	
 }
