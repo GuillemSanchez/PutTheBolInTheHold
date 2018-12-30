@@ -25,6 +25,8 @@ public:
 
 	void ResetPosition(); 
 	void InitialPosition(); 
+	void UpdateVehicle(); 
+	void CheckTime(); 
 	void CreateVehicle();
 	vec3 GetPos();
 

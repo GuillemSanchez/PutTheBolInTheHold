@@ -26,7 +26,7 @@ bool ModulePlayer::Start()
 	s.radius = 2;
 	s.color = Blue;	
 	s.SetPos(0, 5, -40);
-	Ball = App->physics->AddBody(s, 300);
+	Ball = App->physics->AddBody(s, 150);
 
 	vehicle->SetPos(0, 12, -60);
 	
@@ -43,18 +43,50 @@ bool ModulePlayer::CleanUp()
 
 update_status ModulePlayer::Update(float dt)
 {
-	turn = acceleration = brake = 0.0f;
-
-	if (App->scene_intro->touched_the_sky) {
+	if (App->scene_intro->touched_the_sky) 
+	{
 		App->scene_intro->touched_the_sky = false;
 		InitialPosition();
 	}
-	if (lose) {
+	if (lose) 
+	{
 		lose = false;
 		InitialPosition();
 		App->scene_intro->time.Stop();
 		App->scene_intro->time.Start();
 	}
+	
+	CheckTime(); 
+	UpdateVehicle(); 
+
+	Ball->GetTransform(&s.transform);
+	vehicle->Render();
+	s.Render();
+
+	return UPDATE_CONTINUE;
+}
+
+
+void ModulePlayer::ResetPosition()
+{
+	turn = acceleration = brake = 0.0f;
+	vehicle->SetRotation({ 0, vehicle->vehicle->getForwardVector().getX(), 0, vehicle->vehicle->getForwardVector().getZ()});
+
+	vehicle->SetPos(GetPos().x, GetPos().y + 5, GetPos().z);
+}
+
+void ModulePlayer::InitialPosition()
+{
+	vehicle->SetPos(0, 12, -60);
+	Ball->SetPos(0, 5, -40);
+	s.SetPos(0, 5, -40);
+	brake = BRAKE_POWER;
+}
+
+void ModulePlayer::UpdateVehicle()
+{
+	turn = acceleration = brake = 0.0f;
+
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
@@ -82,6 +114,12 @@ update_status ModulePlayer::Update(float dt)
 		ResetPosition();
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	{
+		InitialPosition(); 
+		App->scene_intro->time.Stop();
+		App->scene_intro->time.Start();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
@@ -103,41 +141,18 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
+}
 
-
+void ModulePlayer::CheckTime()
+{
 	Uint32 act_time = App->scene_intro->time.Read();
 	char title[80];
-	sprintf_s(title, "Time: %.1f s || Best_time: %1.f ", (float)act_time/1000, (float)App->scene_intro->finished_time);
+	sprintf_s(title, "Time: %.1f s || Best_time: %1.f ", (float)act_time / 1000, (float)App->scene_intro->finished_time);
 	App->window->SetTitle(title);
-
 
 	if (act_time >= 240000) {
 		lose = true;
 	}
-
-
-	Ball->GetTransform(&s.transform);
-	vehicle->Render();
-	s.Render();
-
-	return UPDATE_CONTINUE;
-}
-
-
-void ModulePlayer::ResetPosition()
-{
-	turn = acceleration = brake = 0.0f;
-	vehicle->SetRotation({ 0, vehicle->vehicle->getForwardVector().getX(), 0, vehicle->vehicle->getForwardVector().getZ()});
-
-	vehicle->SetPos(GetPos().x, GetPos().y + 5, GetPos().z);
-}
-
-void ModulePlayer::InitialPosition()
-{
-	vehicle->SetPos(0, 12, -60);
-	Ball->SetPos(0, 5, -40);
-	s.SetPos(0, 5, -40);
-	brake = BRAKE_POWER;
 }
 
 void ModulePlayer::CreateVehicle()
