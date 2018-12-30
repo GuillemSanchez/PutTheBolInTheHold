@@ -104,12 +104,12 @@ bool ModulePlayer::Start()
 
 	s.radius = 2;
 	s.color = Blue;
-	s.SetPos(0, 5, 25);
+	s.SetPos(0, 5, -40);
 	Ball = App->physics->AddBody(s, 300);
 
 	
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 10);
+	vehicle->SetPos(0, 12, -60);
 	
 	return true;
 }

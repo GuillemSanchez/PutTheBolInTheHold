@@ -44,6 +44,11 @@ bool ModuleSceneIntro::Start()
 	CreateFan(-94, 13, 70);
 	CreateFan(-94, 13, 90);
 
+	CreateFan(-94, 13, 230);
+	CreateFan(-94, 13, 250);
+	CreateFan(-94, 13, 270);
+	CreateFan(-94, 13, 290);
+
 	CreateFan(115, 13, 70);
 	CreateFan(115, 13, 90);
 	CreateFan(115, 13, 110);
@@ -117,7 +122,8 @@ bool ModuleSceneIntro::Start()
 	AddWall(vec3(7, XXL, 800), vec3(-115.5F, 30, 100), Blue); //DERECHA
 	AddWall(vec3(7, XXL, 800), vec3(130.5F, 30, 100), Blue); //IZQUIERDA
 	AddWall(vec3(350, XXL, 7), vec3(0, 30, 450), Blue); //FINAL
-	//AddWall(vec3(350, XXL, 7), vec3(0, 30, 0), Blue); //INICIO
+
+	AddWall(vec3(350, XXL, 7), vec3(0, 30, -80), Blue); //INICIO
 
 
 	time.Start();
@@ -194,12 +200,6 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		time.Start();
 
 	}
-
-
-
-
-
-
 }
 
 PhysBody3D* ModuleSceneIntro::CreateFinishLane(vec3 size, vec3 pos) {
