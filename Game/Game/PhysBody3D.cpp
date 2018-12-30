@@ -1,5 +1,6 @@
 #include "PhysBody3D.h"
 #include "glmath.h"
+#include "Primitive.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
 // =================================================
@@ -66,3 +67,5 @@ btVector3 PhysBody3D::GetPos() {
 	btTransform t = body->getWorldTransform();
 	return t.getOrigin();
 }
+
+

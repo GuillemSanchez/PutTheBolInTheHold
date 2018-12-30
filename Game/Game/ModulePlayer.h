@@ -20,7 +20,9 @@ public:
 	bool CleanUp();
 
 public:
-
+	PhysBody3D* Ball;
+	bool lose = false;
+	Sphere s;
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;

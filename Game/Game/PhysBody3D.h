@@ -7,6 +7,8 @@ class btRigidBody;
 class Module;
 class btVector3;
 class btQuaternion;
+
+
 // =================================================
 struct PhysBody3D
 {
@@ -22,6 +24,7 @@ public:
 	btQuaternion GetRotation();
 	btVector3 GetPos();
 	void SetRotation(btQuaternion rotation);
+
 
 private:
 	btRigidBody* body = nullptr;

@@ -34,6 +34,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void PrintWalls();
 	void CreateFan(float x, float y, float z, Color color = Black);
+	PhysBody3D* CreateFinishLane(vec3 size, vec3 position);
 public:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
@@ -42,8 +43,11 @@ public:
 	PhysBody3D* pb_snake2[MAX_SNAKE];
 	Sphere s_snake2[MAX_SNAKE];
 	*/
-
-
+	Timer time;
+	Uint32 finished_time = 0;
+	PhysBody3D* FinishLane;
+	bool touched_the_sky = false;
+	
 
 	PhysBody3D* pb_chassis;
 	Cube p_chassis;
